@@ -1,10 +1,4 @@
-# CREATE TABLE DeviceInformation (
-#    serial_number VARCHAR(50),
-#    device_model VARCHAR(100),
-#    purchase_date DATE,
-#    UNIQUE(device_model),
-#    PRIMARY KEY(serial_number)
-# );
+import hashlib
 
 class DeviceInformation:
 

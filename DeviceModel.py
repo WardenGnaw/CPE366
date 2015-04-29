@@ -1,3 +1,4 @@
+
 import hashlib
 
 class DeviceModel:
@@ -20,5 +21,5 @@ class DeviceModel:
       return '"' + str(self.device_name) + '", "' + self.device_model + '", "' + self.device_type + '", "' + self.carrier + '"'
 
    def __hash__(self):
-      return hash(self.device_name)
+      return hash(self.device_model)
       
