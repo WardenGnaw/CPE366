@@ -16,7 +16,7 @@ class DeviceInformation:
 				self.purchase_date == purchase_date)
 
 	def __str__(self):
-		return '"' + self.serial_number + '","' + self.device_model + '","' + self.purchase_date
+		return '"' + self.serial_number + '", "' + self.device_model + '", "' + self.purchase_date
 
 	def __hash__(self):
 		return hash(self.serial_number)
