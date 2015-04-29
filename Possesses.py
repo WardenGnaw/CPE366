@@ -16,4 +16,4 @@ class Possesses:
       return str(self.fk_email_id) + ',' + str(self.fk_customer_id)
 
    def __hash__(self):
-      return hash(self.fk_email_id + fk_customer_id)
+      return hash(self.fk_email_id) + hash(fk_customer_id)

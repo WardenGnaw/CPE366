@@ -16,4 +16,4 @@ class IsRegisteredVia:
       return str(self.fk_registration_id) + ', ' + str(self.fk_customer_id)
 
    def __hash__(self):
-      return hash(self.fk_registration_id + fk_customer_id)
+      return hash(self.fk_registration_id) + hash(fk_customer_id)

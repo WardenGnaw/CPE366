@@ -22,4 +22,4 @@ class Event:
       return   str(self.fk_email_id) + ', ' + str(self.event_type) + ', "' + str(event_date) + '", ' + str(fk_event_type_id) + ', ' + str(fk_campaign_name)
 
    def __hash__(self):
-      return hash(self.email_id + fk_event_type_id)
+      return hash(self.email_id) + hash(fk_event_type_id)
