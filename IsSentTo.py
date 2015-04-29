@@ -1,5 +1,3 @@
-import hashlib
-
 class IsSentTo:
    def __init__(self, fk_campaign_name, fk_email_id):
       self.fk_campaign_name = fk_campaign_name
@@ -13,7 +11,8 @@ class IsSentTo:
               self.fk_email_id == other.fk_email_id)
 
    def __str__(self):
-      return   '"' + str(self.fk_campaign_name) + '", ' + str(self.fk_email_id)
+      return '"' + self.fk_campaign_name + '", "' + str(self.fk_email_id) + '"'
 
    def __hash__(self):
-      return hash(self.fk_campaign_name + fk_email_id)
+      return hash(fk_campaign_name) + hash(fk_email_id)
+	
