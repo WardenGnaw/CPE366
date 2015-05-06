@@ -1,0 +1,14 @@
+INSERT INTO RegistrationLocation(14, "Contact Us");
+INSERT INTO RegistrationLocation(41, "XYZ online");
+INSERT INTO RegistrationLocation(42, "XYZ off line");
+INSERT INTO RegistrationLocation(43, "Call Center");
+INSERT INTO RegistrationLocation(44, "Rebate");
+INSERT INTO RegistrationLocation(46, "Warranty bill");
+INSERT INTO RegistrationLocation(47, "Extented warranty");
+INSERT INTO RegistrationLocation(72, "Social Networking Site");
+INSERT INTO RegistrationLocation(84, "BrandX Account Website PC");
+INSERT INTO RegistrationLocation(86, "BrandX Account Website Mobile");
+INSERT INTO RegistrationLocation(88, "BrandX Account Website Tablet");
+INSERT INTO RegistrationLocation(90, "BrandX Account - Mobile Device");
+INSERT INTO RegistrationLocation(92, "BrandX Account - TV");
+INSERT INTO RegistrationLocation(107, "BrandX Historical Data");

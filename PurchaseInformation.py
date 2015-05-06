@@ -30,9 +30,9 @@ class PurchaseInformation:
 				self.ecomm_flag == ecomm_flag)
 
 	def __str__(self):
-		return '"' + str(self.purchase_store_id) + '", "' + self.purchase_store_name + '", "' + self.purchase_store_state 
-			+ '", "' + self.purchase_store_city + ', ' + self.ecomm_flag
+		return (str(self.purchase_store_id) + ', "' + self.purchase_store_name + '", "' + self.purchase_store_state 
+			+ '", "' + self.purchase_store_city + '", ' + self.ecomm_flag)
 
 	def __hash__(self):
-		return hash(self.device)
+		return hash(self.purchase_store_name) + hash(self.purchase_store_state) + hash(self.purchase_store_city)
 
