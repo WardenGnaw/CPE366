@@ -13,4 +13,4 @@ class EventType:
 				self.event_type_name == other.event_type_name)
 
 	def __str__(self):
-		return str(event_type_id) + ', ' + event_type_name
+		return str(self.event_type_id) + ', "' + self.event_type_name + '"'

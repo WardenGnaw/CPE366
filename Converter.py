@@ -11,8 +11,12 @@ import DeviceRegistration
 import DeviceSerial
 import DevicePurchaseDate
 import Link
-import Deployment
-
+import Event
+import EventType
+import EmailSent
+import Possesses
+import IsSentTo
+import IsRegisteredVia
 
 def main():
    device_models = {}
@@ -23,11 +27,15 @@ def main():
    device_registration = {}
    purchase_date = {}
    serial_number = {}
+   link = {}
+   possesses = {}
+   isregisteredvia = {}
    purchase_information[""] = "NULL"
    device_counter = 0
    store_counter = 0
    purchase_date_counter = 0
    serial_counter = 0
+   link_counter = 0
 
    # Read and parse Device Model csv
    with open('CP_Device_Model.csv', 'rb') as csvfile:
@@ -94,6 +102,13 @@ def main():
             customer_email[row[1]]
          except KeyError:
             temp = CustomerEmail.CustomerEmail(row[1], row[11])
+            customer_email[row[1]] = temp
+
+         try:
+            possesses[row[0] + row[1]]   
+         except KeyError:
+            temp = Possesses.Possesses(row[0], row[1])
+            possesses[row[0] + row[1]] = temp
 
    with open('CP_Device.csv', 'rb') as csvfile:
       deviceReader = csv.reader(csvfile, delimiter=',')
@@ -135,8 +150,17 @@ def main():
             temp = DeviceRegistration.DeviceRegistration(row[12], datetime.datetime.strptime(row[10], "%m/%d/%Y").strftime("%Y/%m/%d"), device_models[row[3]], purchase_information[row[6] + row[7] + row[8]], serial_number[row[4]] if row[4] else "NULL", row[1], purchase_date[row[5]] if row[5] else "NULL") 
             device_registration[row[12]] = temp
    
-   deployment = {}
-   link = {}
+         try:
+            isregisteredvia[row[12] + row[0]]
+         except KeyError:
+            temp = IsRegisteredVia.IsRegisteredVia(row[12], row[0])
+            isregisteredvia[row[12] + row[0]] = temp
+
+   event_type = {}
+   event = {}
+   email_sent = {}
+   email_sent_counter = 0
+   issentto = {}
 
    with open('CP_Email.csv', 'rb') as csvfile:
       deviceReader = csv.reader(csvfile, delimiter=',')
@@ -147,21 +171,54 @@ def main():
          try:
             link[row[10]]
          except KeyError:
-            temp = Link.Link(row[10], row[11])
-            link[row[10]] = temp
+            temp = Link.Link(link_counter, row[10], row[11])
+            link[row[10]] = link_counter 
+            link_counter = link_counter + 1
 
          try:
-            deployment[row[6]]
+           event_type[row[7]] 
          except KeyError:
-            temp = Deployment.Deployment(row[6], row[5], 0)
-            deployment[row[6]] = temp
+            temp = EventType.EventType(row[7], row[8])
+            event_type[row[7]] = temp
+         
+         try:
+            email_sent[row[2] + row[3] + row[4] + row[1]]
+         except KeyError:
+            temp = EmailSent.EmailSent(email_sent_counter, row[2], row[3], row[4], row[1])
+            email_sent[row[2] + row[3] + row[4] + row[1]] = email_sent_counter 
+            email_sent_counter = email_sent_counter + 1
+         
+         try:
+            issentto[row[0] + row[2] + row[3] + row[4] + row[1]]
+         except KeyError:
+            temp = IsSentTo.IsSentTo(email_sent[row[2] + row[3] + row[4] + row[1]], row[0], row[6], datetime.datetime.strptime(row[5], "%m/%d/%Y").strftime("%Y/%m/%d"))
+            issentto[row[0] + row[2] + row[3] + row[4] + row[1]] = temp
+      
+         try:
+            event[row[0] + row[9] + row[7] + row[2] + row[3] + row[4] + row[1]]
+         except KeyError:
+            temp = Event.Event(row[0], datetime.datetime.strptime(row[9], "%m/%d/%y %I:%M %p").strftime("%Y/%m/%d %H:%M:%S"), row[7], email_sent[row[2] + row[3] + row[4] + row[1]])
+            event[row[0] + row[9] + row[7] + row[2] + row[3] + row[4] + row[1]] = temp
 
-   for key, value in link.iteritems():
-      print 'INSERT INTO Link(' + str(value) + ');'
-   
+   for key, value in event.iteritems():
+      print 'INSERT INTO Event(' + str(value) + ');'
    return 0
 
 """
+   for key, value in isregisteredvia.iteritems():
+      print 'INSERT INTO IsRegisteredVia(' + str(value) + ');'
+   for key, value in issentto.iteritems():
+      print 'INSERT INTO IsSentTo(' + str(value) + ');'
+   for key, value in possesses.iteritems():
+      print 'INSERT INTO Possesses(' + str(value) + ');'
+   for key, value in customer_email.iteritems():
+      print 'INSERT INTO CustomerEmail(' + str(value) + ');'
+   for key, value in email_sent.iteritems():
+      print 'INSERT INTO EmailSent(' + str(value) + ');'
+   for key, value in link.iteritems():
+      print 'INSERT INTO Link(' + str(value) + ');'
+   for key, value in event_type.iteritems():
+      print 'INSERT INTO EventType(' + str(value) + ');'
    for key, value in device_registration.iteritems():
       print 'INSERT DeviceRegistration(' + str(value) + ');'
    for key, value in purchase_information.iteritems():
@@ -174,6 +231,7 @@ def main():
       print 'INSERT INTO DeviceInformation(' + str(value) + ');'
    for key, value in purchase_date.iteritems():
       print 'INSERT DevicePurchaseDate(' + str(value) + ', "' + datetime.datetime.strptime(key, "%m/%d/%Y").strftime("%Y/%m/%d") + '");'
+         
    
    
    

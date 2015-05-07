@@ -1,0 +1,11 @@
+INSERT INTO EventType(0, "Click");
+INSERT INTO EventType(2, "Email Opened");
+INSERT INTO EventType(11, "Complaint");
+INSERT INTO EventType(20, "Email Sent/Delivered");
+INSERT INTO EventType(37, "Unsubscribe");
+INSERT INTO EventType(38, "Unknown bounce");
+INSERT INTO EventType(39, "Technical/Other bounce");
+INSERT INTO EventType(40, "Hard bounce");
+INSERT INTO EventType(41, "Soft bounce");
+INSERT INTO EventType(42, "Block bounce");
+INSERT INTO EventType(43, "NotSent");
