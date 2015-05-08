@@ -47,7 +47,7 @@ def main():
          try:
             device_models[row[0]]                 # Try to index into the map with key
          except KeyError:                         # If it dosen't exist, put into map
-            temp = DeviceModel.DeviceModel(row[1], row[0], row[2], row[3]) 
+            temp = DeviceModel.DeviceModel(device_counter, row[1], row[0], row[2], row[3]) 
             device_models[row[0]] = temp #device_counter
             device_counter = device_counter + 1
    
@@ -61,8 +61,8 @@ def main():
          try:
             device_models[row[3]]
          except KeyError:
-            temp = DeviceModel.DeviceModel('', row[3], '', '') 
-            device_models[row[3]] = device_counter
+            temp = DeviceModel.DeviceModel(device_counter, '', row[3], '', '') 
+            device_models[row[3]] = temp #device_counter
             device_counter = device_counter + 1
    
          try:
@@ -119,8 +119,8 @@ def main():
          try:
             device_models[row[3]]
          except KeyError:
-            temp = DeviceModel.DeviceModel('NULL', row[3], 'NULL', 'NULL') 
-            device_models[row[3]] = device_counter
+            temp = DeviceModel.DeviceModel(device_counter, 'NULL', row[3], 'NULL', 'NULL') 
+            device_models[row[3]] = temp
             device_counter = device_counter + 1
          
          try:
@@ -147,7 +147,7 @@ def main():
          try:
             device_registration[row[12]]
          except KeyError:
-            temp = DeviceRegistration.DeviceRegistration(row[12], datetime.datetime.strptime(row[10], "%m/%d/%Y").strftime("%Y/%m/%d"), device_models[row[3]], purchase_information[row[6] + row[7] + row[8]], serial_number[row[4]] if row[4] else "NULL", row[1], purchase_date[row[5]] if row[5] else "NULL") 
+            temp = DeviceRegistration.DeviceRegistration(row[12], datetime.datetime.strptime(row[10], "%m/%d/%Y").strftime("%Y/%m/%d"), device_models[row[3]].device_id, purchase_information[row[6] + row[7] + row[8]], serial_number[row[4]] if row[4] else "NULL", row[1], purchase_date[row[5]] if row[5] else "NULL") 
             device_registration[row[12]] = temp
    
          try:
@@ -200,11 +200,15 @@ def main():
             temp = Event.Event(row[0], datetime.datetime.strptime(row[9], "%m/%d/%y %I:%M %p").strftime("%Y/%m/%d %H:%M:%S"), row[7], email_sent[row[2] + row[3] + row[4] + row[1]])
             event[row[0] + row[9] + row[7] + row[2] + row[3] + row[4] + row[1]] = temp
 
-   for key, value in event.iteritems():
-      print 'INSERT INTO Event(' + str(value) + ');'
+   for key, value in device_registration.iteritems():
+      print 'INSERT DeviceRegistration(' + str(value) + ');'
    return 0
 
 """
+   for key, value in device_models.iteritems():
+      print 'INSERT INTO DeviceModel VALUES(' + str(value) + ');'
+   for key, value in event.iteritems():
+      print 'INSERT INTO Event(' + str(value) + ');'
    for key, value in isregisteredvia.iteritems():
       print 'INSERT INTO IsRegisteredVia(' + str(value) + ');'
    for key, value in issentto.iteritems():
@@ -219,16 +223,12 @@ def main():
       print 'INSERT INTO Link(' + str(value) + ');'
    for key, value in event_type.iteritems():
       print 'INSERT INTO EventType(' + str(value) + ');'
-   for key, value in device_registration.iteritems():
-      print 'INSERT DeviceRegistration(' + str(value) + ');'
    for key, value in purchase_information.iteritems():
       print 'INSERT INTO PurchaseInformation(' + str(value) + ');'
    for key, value in customer_account.iteritems():
       print 'INSERT INTO CustomerAccount(' + str(value) + ');'
    for key, value in registration_location.iteritems():
       print 'INSERT INTO RegistrationLocation(' + str(value) + ');'
-   for key, value in device_models.iteritems():
-      print 'INSERT INTO DeviceInformation(' + str(value) + ');'
    for key, value in purchase_date.iteritems():
       print 'INSERT DevicePurchaseDate(' + str(value) + ', "' + datetime.datetime.strptime(key, "%m/%d/%Y").strftime("%Y/%m/%d") + '");'
          

@@ -2,7 +2,8 @@
 import hashlib
 
 class DeviceModel:
-   def __init__(self, device_name, device_model, device_type, carrier):
+   def __init__(self, device_id, device_name, device_model, device_type, carrier):
+      self.device_id = device_id
       self.device_name = device_name
       self.device_model = device_model
       self.device_type = device_type
@@ -18,7 +19,7 @@ class DeviceModel:
               self.carrier == other.carrier)
 
    def __str__(self):
-      return '"' + str(self.device_model) + '", "' + self.device_name + '", "' + self.device_type + '", "' + self.carrier + '"'
+      return str(self.device_id) + ', "' + str(self.device_model) + '", "' + self.device_name + '", "' + self.device_type + '", "' + self.carrier + '"'
 
    def __hash__(self):
       return hash(self.device_model)
